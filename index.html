@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MineHost - Minecraft Hosting</title>
+<meta name="description" content="MineHost Minecraft Server Hosting">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+ font-family:Arial,sans-serif;
+ background:#0b111b;color:white;
+ line-height:1.6
+}
+header{
+ display:flex;justify-content:space-between;
+ align-items:center;padding:18px 7%;
+ background:#101a28;
+ position:sticky;top:0;z-index:10
+}
+.logo{font-size:25px;font-weight:bold;color:#20d48a}
+nav a{color:white;text-decoration:none;margin-left:20px}
+nav a:hover{color:#20d48a}
+.menu{display:none}
+.hero{
+ padding:100px 8%;text-align:center;
+ background:radial-gradient(ellipse at top,#174936,#0b111b 65%)
+}
+.tag{color:#20d48a;font-weight:bold}
+.hero h1{font-size:48px;line-height:1.2;margin:20px 0}
+.hero p{color:#bac5d2;max-width:600px;margin:15px auto}
+.btn{
+ display:inline-block;padding:13px 25px;
+ border:0;border-radius:8px;
+ background:#20d48a;color:#07140e;
+ text-decoration:none;font-weight:bold;
+ cursor:pointer
+}
+.btn:hover{background:#16b977}
+section{padding:65px 8%}
+.heading{text-align:center;margin-bottom:35px}
+.heading h2{font-size:32px}
+.heading p{color:#9caabb}
+.stats,.plans,.features{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ gap:20px
+}
+.card{
+ background:#131e2d;border:1px solid #253447;
+ padding:25px;border-radius:13px
+}
+.card h3{color:#20d48a;margin-bottom:10px}
+.stat{text-align:center}
+.stat h2{color:#20d48a;font-size:30px}
+.plan{border:1px solid #20d48a}
+.price{font-size:32px;font-weight:bold;margin:15px 0}
+ul{padding-left:20px;color:#bac5d2}
+li{margin:9px 0}
+.plan .btn{margin-top:20px;width:100%;text-align:center}
+.features .card{text-align:center}
+.features .icon{font-size:35px}
+.contact{text-align:center;background:#111d2b}
+.contact p{color:#bac5d2;margin:12px}
+footer{
+ padding:25px;text-align:center;
+ background:#080d15;color:#8493a5
+}
+@media(max-width:700px){
+ nav{display:none;position:absolute;top:65px;left:0;
+ width:100%;background:#101a28;padding:20px}
+ nav.show{display:flex;flex-direction:column}
+ nav a{margin:10px}
+ .menu{display:block;background:none;color:white;
+ border:0;font-size:25px}
+ .hero{padding:75px 6%}
+ .hero h1{font-size:36px}
+ .stats,.plans,.features{grid-template-columns:1fr}
+ section{padding:50px 6%}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">⚡ MINEHOST</div>
+ <button class="menu" onclick="toggleMenu()">☰</button>
+ <nav id="nav">
+  <a href="#home">Home</a>
+  <a href="#plans">Plans</a>
+  <a href="#features">Features</a>
+  <a href="#contact">Contact</a>
+ </nav>
+</header>
+
+<div class="hero" id="home">
+ <span class="tag">PREMIUM MINECRAFT HOSTING</span>
+ <h1>Build Your World.<br>We Power It.</h1>
+ <p>Launch your Minecraft adventure with powerful
+ hosting, smooth gameplay and reliable support.</p>
+ <a href="#plans" class="btn">Explore Plans →</a>
+</div>
+
+<section>
+ <div class="stats">
+  <div class="card stat">
+   <h2>32 GB</h2>
+   <p>Featured RAM Plan</p>
+  </div>
+  <div class="card stat">
+   <h2>24/7</h2>
+   <p>Website Availability</p>
+  </div>
+  <div class="card stat">
+   <h2>Java</h2>
+   <p>Minecraft Hosting</p>
+  </div>
+ </div>
+</section>
+
+<section id="plans">
+ <div class="heading">
+  <h2>Our Hosting Plan</h2>
+  <p>Choose your power and start your adventure.</p>
+ </div>
+ <div class="plans">
+  <div class="card plan">
+   <h3>PRO PLAN</h3>
+   <div class="price">32 GB RAM</div>
+   <ul>
+    <li>32 GB RAM allocation</li>
+    <li>Paper / Spigot support</li>
+    <li>Plugin support</li>
+    <li>Server management</li>
+    <li>Java Edition</li>
+    <li>Support assistance</li>
+   </ul>
+   <a class="btn" href="#contact">Get Started</a>
+  </div>
+ </div>
+</section>
+
+<section id="features">
+ <div class="heading">
+  <h2>Why Choose MineHost?</h2>
+  <p>Everything you need for your Minecraft server.</p>
+ </div>
+ <div class="features">
+  <div class="card">
+   <div class="icon">⚡</div>
+   <h3>Powerful Hosting</h3>
+   <p>Hosting plans designed for Minecraft servers.</p>
+  </div>
+  <div class="card">
+   <div class="icon">🛡️</div>
+   <h3>Server Security</h3>
+   <p>Security features depend on your hosting setup.</p>
+  </div>
+  <div class="card">
+   <div class="icon">🎮</div>
+   <h3>Plugin Support</h3>
+   <p>Run your favorite Paper and Spigot plugins.</p>
+  </div>
+ </div>
+</section>
+
+<section class="contact" id="contact">
+ <div class="heading">
+  <h2>Ready to Start?</h2>
+  <p>Contact our team for hosting information and pricing.</p>
+  <a class="btn" id="discordBtn"
+     href="https://discord.com/"
+     target="_blank">Join Discord</a>
+ </div>
+</section>
+
+<footer>
+ <p>© 2026 MineHost. All Rights Reserved.</p>
+ <p>Minecraft Hosting Website</p>
+</footer>
+
+<script>
+function toggleMenu(){
+ document.getElementById("nav").classList.toggle("show");
+}
+document.querySelectorAll("nav a").forEach(link=>{
+ link.addEventListener("click",()=>{
+  document.getElementById("nav").classList.remove("show");
+ });
+});
+</script>
+</body>
+</html>
