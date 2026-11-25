@@ -3,191 +3,328 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MineHost - Minecraft Hosting</title>
-<meta name="description" content="MineHost Minecraft Server Hosting">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MineHost | Premium Panel</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
- font-family:Arial,sans-serif;
- background:#0b111b;color:white;
- line-height:1.6
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+ --bg:#0b1118;--panel:#131e2b;
+ --panel2:#192737;--green:#24d68a;
+ --muted:#91a2b5;--border:#253548;
 }
-header{
- display:flex;justify-content:space-between;
- align-items:center;padding:18px 7%;
- background:#101a28;
- position:sticky;top:0;z-index:10
+body{background:var(--bg);color:#fff;font-family:Arial,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.layout{display:flex;min-height:100vh}
+.sidebar{
+ width:245px;background:#101a26;border-right:1px solid var(--border);
+ padding:24px 15px;position:fixed;inset:0 auto 0 0;z-index:10
 }
-.logo{font-size:25px;font-weight:bold;color:#20d48a}
-nav a{color:white;text-decoration:none;margin-left:20px}
-nav a:hover{color:#20d48a}
-.menu{display:none}
-.hero{
- padding:100px 8%;text-align:center;
- background:radial-gradient(ellipse at top,#174936,#0b111b 65%)
+.logo{font-size:23px;font-weight:900;color:var(--green);padding:8px 10px 30px}
+.navtitle{font-size:11px;color:#718397;margin:20px 10px 10px}
+.nav button{
+ display:block;width:100%;padding:13px 12px;text-align:left;
+ border:0;background:transparent;color:#aebdcd;border-radius:8px;
+ margin:4px 0;font-size:14px
 }
-.tag{color:#20d48a;font-weight:bold}
-.hero h1{font-size:48px;line-height:1.2;margin:20px 0}
-.hero p{color:#bac5d2;max-width:600px;margin:15px auto}
-.btn{
- display:inline-block;padding:13px 25px;
- border:0;border-radius:8px;
- background:#20d48a;color:#07140e;
- text-decoration:none;font-weight:bold;
- cursor:pointer
+.nav button:hover,.nav button.active{background:#1b3540;color:var(--green)}
+.main{margin-left:245px;width:calc(100% - 245px)}
+.topbar{
+ height:72px;background:#101a26;border-bottom:1px solid var(--border);
+ display:flex;align-items:center;justify-content:space-between;padding:0 30px
 }
-.btn:hover{background:#16b977}
-section{padding:65px 8%}
-.heading{text-align:center;margin-bottom:35px}
-.heading h2{font-size:32px}
-.heading p{color:#9caabb}
-.stats,.plans,.features{
- display:grid;grid-template-columns:repeat(3,1fr);
- gap:20px
-}
+.topbar span{color:var(--muted);font-size:13px}
+.user{color:var(--green);font-weight:bold}
+.content{padding:30px;max-width:1200px;margin:auto}
+h1{font-size:27px;margin-bottom:8px}
+.sub{color:var(--muted);font-size:14px;margin-bottom:26px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .card{
- background:#131e2d;border:1px solid #253447;
- padding:25px;border-radius:13px
+ background:var(--panel);border:1px solid var(--border);
+ border-radius:12px;padding:20px;margin-bottom:18px
 }
-.card h3{color:#20d48a;margin-bottom:10px}
-.stat{text-align:center}
-.stat h2{color:#20d48a;font-size:30px}
-.plan{border:1px solid #20d48a}
-.price{font-size:32px;font-weight:bold;margin:15px 0}
-ul{padding-left:20px;color:#bac5d2}
-li{margin:9px 0}
-.plan .btn{margin-top:20px;width:100%;text-align:center}
-.features .card{text-align:center}
-.features .icon{font-size:35px}
-.contact{text-align:center;background:#111d2b}
-.contact p{color:#bac5d2;margin:12px}
-footer{
- padding:25px;text-align:center;
- background:#080d15;color:#8493a5
+.metric{font-size:25px;font-weight:bold;margin:13px 0 5px}
+.green{color:var(--green)}
+.muted{color:var(--muted);font-size:13px}
+.icon{font-size:23px}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.btn{
+ background:var(--green);color:#06150d;border:0;border-radius:7px;
+ padding:11px 16px;font-weight:bold
 }
-@media(max-width:700px){
- nav{display:none;position:absolute;top:65px;left:0;
- width:100%;background:#101a28;padding:20px}
- nav.show{display:flex;flex-direction:column}
- nav a{margin:10px}
- .menu{display:block;background:none;color:white;
- border:0;font-size:25px}
- .hero{padding:75px 6%}
- .hero h1{font-size:36px}
- .stats,.plans,.features{grid-template-columns:1fr}
- section{padding:50px 6%}
+.btn:hover{filter:brightness(.9)}
+.btn.secondary{background:#25384b;color:white}
+.btn.danger{background:#a43b46;color:white}
+.server{
+ display:flex;align-items:center;justify-content:space-between;gap:15px
+}
+.serverinfo h3{margin:5px 0}
+.badge{color:var(--green);font-size:12px}
+.progress{height:8px;background:#29394b;border-radius:20px;margin:12px 0}
+.progress div{height:100%;background:var(--green);border-radius:20px}
+.row{display:flex;justify-content:space-between;gap:15px}
+.hidden{display:none!important}
+.terminal{
+ background:#070d13;color:#65e6a1;padding:18px;border-radius:8px;
+ font-family:monospace;font-size:13px;min-height:180px;
+ white-space:pre-wrap;overflow:auto
+}
+.consoleinput{display:flex;gap:8px;margin-top:12px}
+input,select{
+ width:100%;padding:12px;background:#0d1722;color:white;
+ border:1px solid var(--border);border-radius:7px;margin:8px 0
+}
+label{color:var(--muted);font-size:13px}
+.table{width:100%;border-collapse:collapse}
+.table td,.table th{
+ text-align:left;padding:13px;border-bottom:1px solid var(--border);
+ font-size:13px
+}
+.table th{color:var(--muted)}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.page{display:none}
+.page.active{display:block}
+.menu{display:none;background:none;color:white;border:0;font-size:25px}
+footer{text-align:center;color:#718397;padding:25px;font-size:12px}
+@media(max-width:850px){
+ .sidebar{transform:translateX(-100%);transition:.25s}
+ .sidebar.open{transform:translateX(0)}
+ .main{margin-left:0;width:100%}
+ .menu{display:block}
+ .grid{grid-template-columns:repeat(2,1fr)}
+ .content{padding:20px 14px}
+ .topbar{padding:0 15px}
+}
+@media(max-width:480px){
+ .grid{grid-template-columns:1fr 1fr}
+ .server{align-items:flex-start;flex-direction:column}
+ .metric{font-size:22px}
 }
 </style>
 </head>
 <body>
 
-<header>
+<div class="layout">
+<aside class="sidebar" id="sidebar">
  <div class="logo">⚡ MINEHOST</div>
- <button class="menu" onclick="toggleMenu()">☰</button>
- <nav id="nav">
-  <a href="#home">Home</a>
-  <a href="#plans">Plans</a>
-  <a href="#features">Features</a>
-  <a href="#contact">Contact</a>
- </nav>
-</header>
+ <div class="nav">
+  <div class="navtitle">GENERAL</div>
+  <button class="active" onclick="showPage('dashboard',this)">▦ Dashboard</button>
+  <button onclick="showPage('servers',this)">▣ My Servers</button>
+  <button onclick="showPage('create',this)">＋ Create Server</button>
+  <div class="navtitle">MANAGEMENT</div>
+  <button onclick="showPage('console',this)">⌘ Console</button>
+  <button onclick="showPage('files',this)">▤ File Manager</button>
+  <button onclick="showPage('players',this)">♙ Players</button>
+  <button onclick="showPage('settings',this)">⚙ Settings</button>
+ </div>
+ <div style="position:absolute;bottom:25px;left:22px;color:#718397;font-size:12px">
+  MineHost v1.0 • Demo
+ </div>
+</aside>
 
-<div class="hero" id="home">
- <span class="tag">PREMIUM MINECRAFT HOSTING</span>
- <h1>Build Your World.<br>We Power It.</h1>
- <p>Launch your Minecraft adventure with powerful
- hosting, smooth gameplay and reliable support.</p>
- <a href="#plans" class="btn">Explore Plans →</a>
+<main class="main">
+ <header class="topbar">
+  <div style="display:flex;align-items:center;gap:15px">
+   <button class="menu" onclick="toggleSidebar()">☰</button>
+   <b>MINEHOST PANEL</b>
+  </div>
+  <div class="user">● Demo Account</div>
+ </header>
+
+ <div class="content">
+
+ <section id="dashboard" class="page active">
+  <h1>Dashboard Overview</h1>
+  <p class="sub">Welcome to your MineHost control panel.</p>
+  <div class="grid">
+   <div class="card"><div class="icon">▣</div>
+    <div class="metric" id="serverCount">01</div>
+    <div class="muted">My Servers</div></div>
+   <div class="card"><div class="icon">⚡</div>
+    <div class="metric green">32 GB</div>
+    <div class="muted">Plan RAM</div></div>
+   <div class="card"><div class="icon">◉</div>
+    <div class="metric" id="statusText">Offline</div>
+    <div class="muted">Server Status</div></div>
+   <div class="card"><div class="icon">♙</div>
+    <div class="metric" id="playerCount">0</div>
+    <div class="muted">Online Players</div></div>
+  </div>
+  <div class="sectionhead">
+   <h2>My Server</h2>
+   <button class="btn" onclick="showPage('create')">+ Create</button>
+  </div>
+  <div class="card">
+   <div class="server">
+    <div class="serverinfo">
+     <span class="badge">● MINECRAFT JAVA</span>
+     <h3 id="serverName">MineHost SMP</h3>
+     <p class="muted">Paper • 1.21.x • Demo Server</p>
+     <p class="muted" id="serverStatus">Status: Offline</p>
+    </div>
+    <div class="actions">
+     <button class="btn" onclick="control('start')">Start</button>
+     <button class="btn danger" onclick="control('stop')">Stop</button>
+     <button class="btn secondary" onclick="control('restart')">Restart</button>
+    </div>
+   </div>
+   <div style="margin-top:25px">
+    <div class="row"><span class="muted">CPU Usage</span><b id="cpu">0%</b></div>
+    <div class="progress"><div id="cpuBar" style="width:0%"></div></div>
+    <div class="row"><span class="muted">RAM Usage</span><b id="ram">0 / 32 GB</b></div>
+    <div class="progress"><div id="ramBar" style="width:0%"></div></div>
+   </div>
+  </div>
+ </section>
+
+ <section id="servers" class="page">
+  <h1>My Servers</h1><p class="sub">Manage your Minecraft servers.</p>
+  <div class="card">
+   <h3 id="serverListName">MineHost SMP</h3>
+   <p class="muted">Minecraft Java • Paper</p>
+   <br><span class="badge" id="serverListStatus">● Offline</span>
+   <br><br><button class="btn" onclick="showPage('dashboard')">Manage Server</button>
+  </div>
+ </section>
+
+ <section id="create" class="page">
+  <h1>Create Server</h1><p class="sub">Create a demo server configuration.</p>
+  <div class="card">
+   <label>Server Name</label>
+   <input id="newName" placeholder="My Minecraft SMP">
+   <label>Software</label>
+   <select id="software"><option>Paper</option><option>Spigot</option><option>Vanilla</option></select>
+   <label>RAM Plan</label>
+   <select><option>32 GB RAM (Demo Plan)</option></select>
+   <button class="btn" onclick="createServer()">Create Demo Server</button>
+   <p class="muted" id="createMessage" style="margin-top:15px"></p>
+  </div>
+ </section>
+
+ <section id="console" class="page">
+  <h1>Server Console</h1>
+  <p class="sub">Demo terminal. Commands are not sent to a real server.</p>
+  <div class="card">
+   <div class="terminal" id="terminal">[MineHost] Demo console initialized.
+[MineHost] Waiting for commands...</div>
+   <div class="consoleinput">
+    <input id="command" placeholder="Enter demo command...">
+    <button class="btn" onclick="sendCommand()">Send</button>
+   </div>
+  </div>
+ </section>
+
+ <section id="files" class="page">
+  <h1>File Manager</h1><p class="sub">Example server files.</p>
+  <div class="card">
+   <table class="table">
+    <tr><th>Name</th><th>Type</th><th>Status</th></tr>
+    <tr><td>server.properties</td><td>Config</td><td>Demo</td></tr>
+    <tr><td>plugins</td><td>Folder</td><td>Demo</td></tr>
+    <tr><td>world</td><td>Folder</td><td>Demo</td></tr>
+    <tr><td>eula.txt</td><td>Text</td><td>Demo</td></tr>
+   </table>
+   <p class="muted" style="margin-top:15px">Demo file list only. No real files are stored.</p>
+  </div>
+ </section>
+
+ <section id="players" class="page">
+  <h1>Player Management</h1>
+  <p class="sub">Example player list.</p>
+  <div class="card">
+   <table class="table">
+    <tr><th>Player</th><th>Role</th><th>Status</th></tr>
+    <tr><td>Steve</td><td>Admin</td><td class="green">Demo</td></tr>
+    <tr><td>Alex</td><td>Player</td><td class="green">Demo</td></tr>
+   </table>
+  </div>
+ </section>
+
+ <section id="settings" class="page">
+  <h1>Settings</h1><p class="sub">Server configuration demo.</p>
+  <div class="card">
+   <label>Server Name</label>
+   <input id="settingName" value="MineHost SMP">
+   <label>Minecraft Software</label>
+   <select><option>Paper</option><option>Spigot</option></select>
+   <button class="btn" onclick="saveSettings()">Save Settings</button>
+   <p class="muted" id="saveMessage" style="margin-top:12px"></p>
+  </div>
+ </section>
+
+ </div>
+ <footer>© 2026 MineHost • Premium Minecraft Hosting Panel • Demo</footer>
+</main>
 </div>
 
-<section>
- <div class="stats">
-  <div class="card stat">
-   <h2>32 GB</h2>
-   <p>Featured RAM Plan</p>
-  </div>
-  <div class="card stat">
-   <h2>24/7</h2>
-   <p>Website Availability</p>
-  </div>
-  <div class="card stat">
-   <h2>Java</h2>
-   <p>Minecraft Hosting</p>
-  </div>
- </div>
-</section>
-
-<section id="plans">
- <div class="heading">
-  <h2>Our Hosting Plan</h2>
-  <p>Choose your power and start your adventure.</p>
- </div>
- <div class="plans">
-  <div class="card plan">
-   <h3>PRO PLAN</h3>
-   <div class="price">32 GB RAM</div>
-   <ul>
-    <li>32 GB RAM allocation</li>
-    <li>Paper / Spigot support</li>
-    <li>Plugin support</li>
-    <li>Server management</li>
-    <li>Java Edition</li>
-    <li>Support assistance</li>
-   </ul>
-   <a class="btn" href="#contact">Get Started</a>
-  </div>
- </div>
-</section>
-
-<section id="features">
- <div class="heading">
-  <h2>Why Choose MineHost?</h2>
-  <p>Everything you need for your Minecraft server.</p>
- </div>
- <div class="features">
-  <div class="card">
-   <div class="icon">⚡</div>
-   <h3>Powerful Hosting</h3>
-   <p>Hosting plans designed for Minecraft servers.</p>
-  </div>
-  <div class="card">
-   <div class="icon">🛡️</div>
-   <h3>Server Security</h3>
-   <p>Security features depend on your hosting setup.</p>
-  </div>
-  <div class="card">
-   <div class="icon">🎮</div>
-   <h3>Plugin Support</h3>
-   <p>Run your favorite Paper and Spigot plugins.</p>
-  </div>
- </div>
-</section>
-
-<section class="contact" id="contact">
- <div class="heading">
-  <h2>Ready to Start?</h2>
-  <p>Contact our team for hosting information and pricing.</p>
-  <a class="btn" id="discordBtn"
-     href="https://discord.com/"
-     target="_blank">Join Discord</a>
- </div>
-</section>
-
-<footer>
- <p>© 2026 MineHost. All Rights Reserved.</p>
- <p>Minecraft Hosting Website</p>
-</footer>
-
 <script>
-function toggleMenu(){
- document.getElementById("nav").classList.toggle("show");
+let online=false;
+let name="MineHost SMP";
+
+function toggleSidebar(){
+ document.getElementById("sidebar").classList.toggle("open");
 }
-document.querySelectorAll("nav a").forEach(link=>{
- link.addEventListener("click",()=>{
-  document.getElementById("nav").classList.remove("show");
- });
-});
+function showPage(id,btn){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+ if(btn)btn.classList.add("active");
+ document.getElementById("sidebar").classList.remove("open");
+}
+function update(){
+ let status=online?"Online":"Offline";
+ document.getElementById("statusText").textContent=status;
+ document.getElementById("serverStatus").textContent="Status: "+status;
+ document.getElementById("serverListStatus").textContent="● "+status;
+ let cpu=online?24:0,ram=online?4:0;
+ document.getElementById("cpu").textContent=cpu+"%";
+ document.getElementById("ram").textContent=ram+" / 32 GB";
+ document.getElementById("cpuBar").style.width=cpu+"%";
+ document.getElementById("ramBar").style.width=(ram/32*100)+"%";
+ document.getElementById("playerCount").textContent=online?"2":"0";
+}
+function control(action){
+ if(action==="start")online=true;
+ if(action==="stop")online=false;
+ if(action==="restart")online=true;
+ update();
+ log("[MineHost Demo] "+action.toUpperCase()+" requested.");
+}
+function createServer(){
+ let n=document.getElementById("newName").value.trim();
+ if(!n){alert("Please enter a server name.");return;}
+ name=n;
+ document.getElementById("serverName").textContent=name;
+ document.getElementById("serverListName").textContent=name;
+ document.getElementById("settingName").value=name;
+ document.getElementById("createMessage").textContent=
+ "Demo server configuration created successfully!";
+ log("[MineHost Demo] Created configuration: "+name);
+ document.getElementById("serverCount").textContent="01";
+}
+function log(message){
+ let t=document.getElementById("terminal");
+ t.textContent+="\n"+message;
+ t.scrollTop=t.scrollHeight;
+}
+function sendCommand(){
+ let input=document.getElementById("command");
+ let cmd=input.value.trim();
+ if(!cmd)return;
+ log("> "+cmd);
+ log("[Demo] Command received. No real server is connected.");
+ input.value="";
+}
+function saveSettings(){
+ let n=document.getElementById("settingName").value.trim();
+ if(!n)return;
+ name=n;
+ document.getElementById("serverName").textContent=n;
+ document.getElementById("serverListName").textContent=n;
+ document.getElementById("saveMessage").textContent="Demo settings saved!";
+}
+update();
 </script>
 </body>
 </html>
