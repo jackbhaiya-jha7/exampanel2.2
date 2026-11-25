@@ -100,9 +100,44 @@ footer{text-align:center;color:#718397;padding:25px;font-size:12px}
  .server{align-items:flex-start;flex-direction:column}
  .metric{font-size:22px}
 }
+
+.auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(circle at top,#1b3540 0,#0b1118 55%)}
+.auth-card{width:100%;max-width:420px;background:#131e2b;border:1px solid #253548;border-radius:16px;padding:28px;box-shadow:0 20px 60px #0008}
+.auth-logo{text-align:center;color:#24d68a;font-size:25px;font-weight:900;margin-bottom:8px}
+.auth-sub{text-align:center;color:#91a2b5;font-size:13px;margin-bottom:22px}
+.auth-card h2{margin-bottom:8px;text-align:center}
+.auth-card label{display:block;margin-top:12px}
+.auth-card .btn{width:100%;margin-top:14px}
+.auth-switch{text-align:center;color:#91a2b5;font-size:13px;margin-top:18px}
+.auth-switch button{background:none;border:0;color:#24d68a;font-weight:bold;cursor:pointer}
+.auth-error{color:#ff8992;font-size:13px;margin-top:12px;min-height:18px}
+.auth-note{color:#91a2b5;font-size:11px;line-height:1.5;margin-top:16px;text-align:center}
+#appLayout{display:none}
+
 </style>
 </head>
 <body>
+
+
+<div class="auth-screen" id="authScreen">
+  <div class="auth-card">
+    <div class="auth-logo">⚡ MINEHOST</div>
+    <p class="auth-sub">Your Minecraft hosting control panel</p>
+    <h2 id="authTitle">Welcome Back</h2>
+    <p class="muted" style="text-align:center;margin-top:6px" id="authDescription">Login to continue to your panel.</p>
+    <form id="authForm">
+      <label for="authEmail">Email Address</label>
+      <input id="authEmail" type="email" placeholder="you@example.com" autocomplete="email" required>
+      <label for="authPassword">Password</label>
+      <input id="authPassword" type="password" placeholder="Enter password" autocomplete="current-password" minlength="6" required>
+      <button class="btn" id="authSubmit" type="submit">Login</button>
+    </form>
+    <p class="auth-error" id="authError" role="alert"></p>
+    <p class="auth-switch" id="authSwitchText">New to MineHost? <button type="button" id="authSwitch">Create an account</button></p>
+    <p class="auth-note">Use an account you own. Passwords are handled by Firebase Authentication.</p>
+  </div>
+</div>
+<div id="appLayout">
 
 <div class="layout">
 <aside class="sidebar" id="sidebar">
@@ -129,7 +164,7 @@ footer{text-align:center;color:#718397;padding:25px;font-size:12px}
    <button class="menu" onclick="toggleSidebar()">☰</button>
    <b>MINEHOST PANEL</b>
   </div>
-  <div class="user">● Demo Account</div>
+  <div style="display:flex;align-items:center;gap:12px"><span class="user" id="userEmail">● Account</span><button class="btn secondary" id="logoutBtn" type="button" style="padding:8px 11px">Logout</button></div>
  </header>
 
  <div class="content">
@@ -257,6 +292,7 @@ footer{text-align:center;color:#718397;padding:25px;font-size:12px}
  <footer>© 2026 MineHost • Premium Minecraft Hosting Panel • Demo</footer>
 </main>
 </div>
+</div>
 
 <script>
 let online=false;
@@ -326,5 +362,101 @@ function saveSettings(){
 }
 update();
 </script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth,
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB4PV_NSNEw4dhq0V5TsxygS5eDRTuB00E",
+  authDomain: "viram-hosting.firebaseapp.com",
+  projectId: "viram-hosting",
+  appId: "1:96653642028:web:c111b399dd6c0538188489"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const authScreen = document.getElementById("authScreen");
+const appLayout = document.getElementById("appLayout");
+const authForm = document.getElementById("authForm");
+const authTitle = document.getElementById("authTitle");
+const authDescription = document.getElementById("authDescription");
+const authSubmit = document.getElementById("authSubmit");
+const authSwitch = document.getElementById("authSwitch");
+const authSwitchText = document.getElementById("authSwitchText");
+const authError = document.getElementById("authError");
+const authPassword = document.getElementById("authPassword");
+let isSignup = false;
+
+authSwitch.addEventListener("click", () => {
+  isSignup = !isSignup;
+  authTitle.textContent = isSignup ? "Create Account" : "Welcome Back";
+  authDescription.textContent = isSignup ? "Sign up to access your MineHost panel." : "Login to continue to your panel.";
+  authSubmit.textContent = isSignup ? "Create Account" : "Login";
+  authSwitchText.innerHTML = isSignup
+    ? 'Already have an account? <button type="button" id="authSwitch">Login</button>'
+    : 'New to MineHost? <button type="button" id="authSwitch">Create an account</button>';
+  document.getElementById("authSwitch").addEventListener("click", () => authSwitch.click());
+  authPassword.autocomplete = isSignup ? "new-password" : "current-password";
+  authError.textContent = "";
+});
+
+authForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  authError.textContent = "";
+  authSubmit.disabled = true;
+  authSubmit.textContent = isSignup ? "Creating..." : "Logging in...";
+  const email = document.getElementById("authEmail").value.trim();
+  const password = authPassword.value;
+  try {
+    if (isSignup) {
+      await createUserWithEmailAndPassword(auth, email, password);
+    } else {
+      await signInWithEmailAndPassword(auth, email, password);
+    }
+  } catch (error) {
+    const messages = {
+      "auth/email-already-in-use": "This email already has an account. Please login.",
+      "auth/invalid-email": "Please enter a valid email address.",
+      "auth/weak-password": "Password must be at least 6 characters.",
+      "auth/invalid-credential": "Email or password is incorrect.",
+      "auth/user-not-found": "No account found. Please sign up first.",
+      "auth/too-many-requests": "Too many attempts. Please try again later.",
+      "auth/network-request-failed": "Network error. Check your internet connection."
+    };
+    authError.textContent = messages[error.code] || error.message || "Authentication failed. Please try again.";
+  } finally {
+    authSubmit.disabled = false;
+    authSubmit.textContent = isSignup ? "Create Account" : "Login";
+  }
+});
+
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+  try {
+    await signOut(auth);
+  } catch (error) {
+    alert("Logout failed: " + error.message);
+  }
+});
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    authScreen.style.display = "none";
+    appLayout.style.display = "block";
+    document.getElementById("userEmail").textContent = "● " + (user.email || "Account");
+  } else {
+    appLayout.style.display = "none";
+    authScreen.style.display = "flex";
+  }
+});
+</script>
+
 </body>
 </html>
